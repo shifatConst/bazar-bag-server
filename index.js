@@ -35,7 +35,14 @@ client.connect(err => {
             console.log(err);
             res.send(items);
             console.log('form database', items);
+        })
+    })
 
+    app.get('/products/:id', (req, res) => {
+        productCollection.find({_id: req.params.id})
+        .toArray((err, items) => {
+            console.log(err);
+            res.send(items);
         })
     })
 
