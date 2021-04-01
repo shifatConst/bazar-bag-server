@@ -17,6 +17,7 @@ const port = process.env.PORT || 5000;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
     const productCollection = client.db("bazar-bag").collection("products");
+    const orderCollection = client.db("bazar-bag").collection("order");
     console.log('database connected successfully');
 
     app.post('/addProduct', (req, res) => {
@@ -30,6 +31,15 @@ client.connect(err => {
         })
     })
 
+    app.post('/checkout', (req, res) => {
+        const newBooking = req.body;
+        orderCollection.insertOne(newBooking)
+        .then(result => {
+            res.send(result.insertedCount > 0);
+        })
+        console.log('new booking: ', newBooking);
+    })
+
     app.get('/products', (req, res) => {
         productCollection.find({})
         .toArray((err, items) => {
@@ -40,12 +50,10 @@ client.connect(err => {
     })
 
     app.get('/products/:id', (req, res) => {
-        // console.log(req.params.id)
         productCollection.find({_id: ObjectId (req.params.id)})
         .toArray((err, items) => {
             console.log(err);
             res.send(items[0]);
-            // console.log(items);
         })
     })
 
