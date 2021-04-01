@@ -39,7 +39,8 @@ client.connect(err => {
     })
 
     app.get('/products/:id', (req, res) => {
-        productCollection.find({_id: req.params.id})
+        console.log(req.params.id)
+        // productCollection.find({_id: req.params.id})
         .toArray((err, items) => {
             console.log(err);
             res.send(items[0]);
