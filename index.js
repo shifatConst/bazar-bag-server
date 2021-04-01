@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 const cors = require('cors');
 require('dotenv').config();
 
@@ -40,10 +41,11 @@ client.connect(err => {
 
     app.get('/products/:id', (req, res) => {
         console.log(req.params.id)
-        // productCollection.find({_id: req.params.id})
+        productCollection.find({_id: ObjectId (req.params.id)})
         .toArray((err, items) => {
             console.log(err);
-            res.send(items[0]);
+            res.send(items);
+            console.log(items);
         })
     })
 
