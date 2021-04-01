@@ -42,7 +42,7 @@ client.connect(err => {
         productCollection.find({_id: req.params.id})
         .toArray((err, items) => {
             console.log(err);
-            res.send(items);
+            res.send(items[0]);
         })
     })
 
