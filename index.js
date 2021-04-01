@@ -57,6 +57,14 @@ client.connect(err => {
         })
     })
 
+    app.get('/order', (req, res) => {
+        orderCollection.find({})
+        .toArray((err, products) => {
+            res.send(products);
+            console.log(err);
+        })
+    })
+
     // client.close();
 });
 
